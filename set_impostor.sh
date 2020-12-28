@@ -2,6 +2,10 @@
 set -euo pipefail
 
 REGION_INFO_FILE=~/.steam/steam/steamapps/compatdata/945360/pfx/drive_c/users/steamuser/AppData/LocalLow/Innersloth/Among\ Us/regionInfo.dat
+DEFAULT_SERVER=hlz.mn
+DEFAULT_PORT=22023
+PROMPT_SERVER=n
+CONFIRM_SERVER=y
 
 echoe() {
 	echo $@ >&1
@@ -17,6 +21,10 @@ echod() {
 
 echon() {
 	echo -n $@
+}
+
+check_valid_bool() {
+	[ "$1" = "y" ] || [ "$1" = "n" ]
 }
 
 check_ip() {
@@ -75,11 +83,25 @@ if [ "$(uname -m)" != "x86_64" ]
 	echoe "Architecture is not x86_64, erroring out -- This script was not tested for other architectures, especially not architectures with other Endianness"
 fi
 
-DEFAULT_SERVER=hlz.mn
-DEFAULT_PORT=22023
+if ! check_valid_bool "$PROMPT_SERVER"
+	then
+	echoe "Invalid value for PROMPT_SERVER"
+fi
 
-read -p "Enter server name [${DEFAULT_SERVER}]: " SERVER
-read -p "Enter port [${DEFAULT_PORT}]: " PORT
+if ! check_valid_bool "$CONFIRM_SERVER"
+        then
+        echoe "Invalid value for CONFIRM_SERVER"
+fi
+
+if [ "$PROMPT_SERVER" = "y" ]
+	then
+	read -p "Enter server name [${DEFAULT_SERVER}]: " SERVER
+	read -p "Enter port [${DEFAULT_PORT}]: " PORT
+else
+	SERVER=""
+	PORT=""
+fi
+
 if [ -z "$SERVER" ]
 	then
 	SERVER=$DEFAULT_SERVER
@@ -118,6 +140,9 @@ IP_ADDR="${IP_ADDR1}.${IP_ADDR2}.${IP_ADDR3}.${IP_ADDR4}"
 	echon -e "\x00\x00\x00\x00"
 ) >"$REGION_INFO_FILE"
 
-echod "Selected server $SERVER, IP $IP_ADDR, press Enter to continue."
-read
-$@
+if [ "$CONFIRM_SERVER" = "y" ]
+	then
+	echo "Selected server $SERVER, IP $IP_ADDR, press Enter to continue."
+	read
+fi
+exec $@
