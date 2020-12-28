@@ -145,4 +145,3 @@ if [ "$CONFIRM_SERVER" = "y" ]
 	echo "Selected server $SERVER, IP $IP_ADDR, press Enter to continue."
 	read
 fi
-exec $@
