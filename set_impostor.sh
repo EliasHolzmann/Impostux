@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REGION_INFO_FILE=~/.steam/steam/steamapps/compatdata/945360/pfx/drive_c/users/steamuser/AppData/LocalLow/Innersloth/Among\ Us/regionInfo.dat
-DEFAULT_SERVER=hlz.mn
+DEFAULT_SERVER=skip
 DEFAULT_PORT=22023
 PROMPT_SERVER=y
 CONFIRM_SERVER=y
@@ -98,7 +98,7 @@ fi
 if [ "$PROMPT_SERVER" = "y" ]
 	then
 	read -p "Enter server name or \"skip\" [${DEFAULT_SERVER}]: " SERVER
-	if [ "$SERVER" = "skip" ]
+	if [ "$SERVER" = "skip" ] || ([ "$SERVER" = "" ] &&  [ "$DEFAULT_SERVER" = "skip" ])
 		then
 		echo "Skipping server selection, press Enter to continue."
 		read
