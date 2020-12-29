@@ -25,7 +25,7 @@ $ cp impostor_wrapper.sh set_impostor.sh ~/.local/bin/
 ```
 
 # 4. Add to launch options
-Add  ~/.local/bin/impostor_wrapper.sh to the launch options for Among Us in Steam:
+Add  `~/.local/bin/impostor_wrapper.sh` to the launch options for Among Us in Steam:
 1. Open Steam
 2. Go to *Library*
 3. Right click *Among Us*
