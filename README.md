@@ -1,5 +1,9 @@
 This is a Among Us private server selector for Steam on Linux. It automagically allows for server selection while starting Among Us. If you also want to use it, follow these steps:
 
+# 0. Necessary dependencies:
+- gnome-terminal (would probably also work with other terminal emulators if code for them is added – Pull requests are welcome!)
+- dig
+
 # 1. Clone
 Clone the repository. Enter a terminal and type:
 
